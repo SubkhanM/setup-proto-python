@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+// python -m grpc_tools.protoc --proto_path=protobuf --python_out=backend --grpc_python_out=backend protobuf/inventory.proto
+
+message Item {
+  string id = 1;
+  string name = 2;
+  string category = 3;
+  string location = 4;
+  string expiry_date = 5;
+  int64 price = 6;
+}
+
+message ItemList {
+  repeated Item items = 1;
+}
+
+message ItemId {
+  string id = 1;
+}
+
+message Empty {}
+
+service InventoryService {
+  rpc AddItem (Item) returns (Item) {} //create
+  rpc GetAllItems (Empty) returns (ItemList) {}
+  rpc GetItem (ItemId) returns (Item) {}
+  rpc UpdateItem (Item) returns (Item) {}
+  rpc DeleteItem (ItemId) returns (Empty) {}
+}
